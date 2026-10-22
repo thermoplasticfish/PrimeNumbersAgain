@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace PrimeNumbersAgain;
@@ -36,7 +37,40 @@ class Program
     /// <returns>The prime at position <paramref name="n"/> once implemented; currently returns 0 as a placeholder.</returns>
     static int FindNthPrime(int n)
     {
-        return 0;
+        List<int> primes = new List<int>();
+        primes.Add(2);
+        
+        if (n == 1)
+            return primes[0];
+
+        primes.Add(3);
+        int nextNum = 3;
+        while (primes.Count < n)
+        {
+            nextNum += 2;
+
+            bool isPrime = true;
+
+            for (int i = 0; i < primes.Count; i++)
+            {
+                if (primes[i] > Math.Sqrt(nextNum))
+                {
+                    break;
+                }
+
+                if (nextNum % primes[i] == 0)
+                {
+                    isPrime = false;
+                    break;
+                }
+            }
+
+            if (isPrime)
+            {
+                primes.Add(nextNum);
+            }
+        }
+        return primes[primes.Count - 1];
     }
 
     /// <summary>
